@@ -2,7 +2,8 @@ import pygame
 import requests
 import json
 
-GRID_WIDTH = GRID_HEIGHT = 100
+GRID_WIDTH = 100
+GRID_HEIGHT = 50
 
 url = "https://cc-gekleurde-vakjes-4xdpz6dd6q-ez.a.run.app/api"
 
@@ -11,15 +12,19 @@ statusTypes = ['ELECTRIFIED', 'COLD', 'HOT', 'WET']
 startPos = (25, 49)
 endPos = (0, 49)
 class Solver:
-	def __init__(self):
+	def __init__(self, resetGrid = True):
 		self.finished = False
-		self.grid = [[0 for _ in range(GRID_WIDTH)] for _ in range(GRID_HEIGHT)]
+		if resetGrid:
+			self.grid = [[0 for _ in range(GRID_WIDTH)] for _ in range(GRID_HEIGHT)]
 		self.path = [startPos]
 		self.cPos = startPos
 		self.statuses = { d: False for d in statusTypes}
 
 		self.grid[self.cPos[1]][self.cPos[0]] = fieldType['PATH']
 		self.grid[endPos[1]][endPos[0]] = fieldType['FINISH']
+
+	def reset(self):
+		self.__init__(False)
 
 	def setSurrounding(self):
 		x = self.cPos[0]
@@ -65,7 +70,7 @@ class Solver:
 			print("Unable to walk in direction, retry!")
 			print(r.text)
 		else:
-			print("successfully walked!")
+			# print("successfully walked!")
 			foo = json.loads(r.text)
 			self.cPos = newPos
 			self.path.append(newPos)
@@ -73,7 +78,6 @@ class Solver:
 			for s in ['ELECTRIFIED', 'COLD', 'HOT', 'WET']: # update statuses
 				if foo[s] != self.statuses[s]:
 					self.statuses[s] = foo[s]
-
 
 
 if __name__ == "__main__": 

@@ -4,3 +4,5 @@ Regels
 (ALs je hot bent kan je niet door een fire tegel)
 
 -ALs je Wet bent kan je niet door een Electric tegel
+-Je kan niet 2 keer door een tegel die de zelfde status effect geeft
+

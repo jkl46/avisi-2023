@@ -1,11 +1,12 @@
-from solver import GRID_WIDTH, Solver, fieldType, statusTypes
+from solver import GRID_WIDTH, Solver, fieldType, statusTypes, GRID_HEIGHT
 import requests
 import pygame
 
 TEXTSPACING = 40
 
-BLOCKS = 10
-WIDTH = HEIGHT = GRID_WIDTH * BLOCKS
+BLOCKS = 15
+WIDTH = GRID_WIDTH * BLOCKS
+HEIGHT = GRID_HEIGHT * BLOCKS
 clock = pygame.time.Clock()
 win = pygame.display.set_mode((WIDTH, HEIGHT))
 FPS = 30
@@ -81,6 +82,8 @@ if __name__ == "__main__":
 				elif event.key in [pygame.K_UP, pygame.K_DOWN, pygame.K_RIGHT, pygame.K_LEFT]:
 					solver.walk(event.key)
 					solver.setSurrounding()
+				elif event.key == pygame.K_r:
+					solver.reset()
 
 		drawScreen(win, solver)
 		pygame.display.update()
