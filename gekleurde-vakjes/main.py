@@ -19,6 +19,7 @@ COLORS = {'BLACK': (0,0,0),
 	'GREEN':(0,255,0),
 	'BLUE':(0,0,255),
 	'GREY': (10,10,10),
+	'BROWN' : (102,34,0),
 	'ELECTRIFIED': (255,255, 0),
 	'COLD': (102,255,255),
 	'HOT' : (255,65,0),
@@ -45,10 +46,20 @@ def drawScreen(win, solver):
 			if cell == 0:
 				continue
 
-			if cell == fieldType['PATH']:
-				c = COLORS['GREEN']
+			if cell == fieldType['PATH']: # Match: case fieldType['type'] werk niet! kut python
+				c = COLORS['WHITE']
 			elif cell == fieldType['MOUNTAIN']:
 				c = COLORS['BLUE']
+			elif cell == fieldType['WATER']:
+				c = COLORS['WET']
+			elif cell == fieldType ['FIRE']:
+				c = COLORS['HOT']
+			elif cell == fieldType['ELECTRIC']:
+				c = COLORS['ELECTRIFIED']
+			elif cell == fieldType['ICE']:
+				c = COLORS['COLD']
+			elif cell == fieldType['RUBBER']:
+				c = COLORS['BROWN']
 			else:
 				c = COLORS['BLACK']
 			pygame.draw.rect(win, c, (x*BLOCKS, y*BLOCKS, BLOCKS, BLOCKS))

@@ -6,7 +6,7 @@ GRID_WIDTH = GRID_HEIGHT = 100
 
 url = "https://cc-gekleurde-vakjes-4xdpz6dd6q-ez.a.run.app/api"
 
-fieldType = {'UNKNOWN': 0, 'PATH':1, 'MOUNTAIN':2, 'FINISH': 3, 'ELECTRIC' : 4, 'WATER' : 5, 'FIRE' : 6, 'ICE' : 7} #kut python heb geen enums
+fieldType = {'UNKNOWN': 0, 'PATH':1, 'MOUNTAIN':2, 'FINISH': 3, 'ELECTRIC' : 4, 'WATER' : 5, 'FIRE' : 6, 'ICE' : 7, 'RUBBER': 8} #kut python heb geen enums
 statusTypes = ['ELECTRIFIED', 'COLD', 'HOT', 'WET']
 startPos = (25, 49)
 endPos = (0, 49)
@@ -33,6 +33,8 @@ class Solver:
 			data = json.loads(res.text)
 			try:
 				c = fieldType[data['type']]
+				if c != 1 and c != 2:
+					print(f'FOUND {data["type"]} AT ({data["x"]},{data["y"]})')
 			except Exception:
 				print(f"FOUND {data['type']} at ({data['x']},{data['y']})")
 				c = fieldType['UNKNOWN']
@@ -60,8 +62,8 @@ class Solver:
 		r = requests.post(f"{url}/walk", json = json.loads(payload))
 
 		if r.status_code != 200:
-			# print(r.text)
 			print("Unable to walk in direction, retry!")
+			print(r.text)
 		else:
 			print("successfully walked!")
 			foo = json.loads(r.text)
