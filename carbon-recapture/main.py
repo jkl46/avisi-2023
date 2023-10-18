@@ -8,7 +8,6 @@ urllib.request.urlretrieve('https://i.ibb.co/tMpTt08/image.png', "image.png")
 # urllib.request.urlretrieve('https://i.ibb.co/Np0q8P2/image2.png', "image.png")
 
 image = Image.open("image.png")
-pixel_map = image.load()
 width, height = image.size
 
 ccfNum = 10
