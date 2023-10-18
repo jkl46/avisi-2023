@@ -84,6 +84,11 @@ if __name__ == "__main__":
 					solver.setSurrounding()
 				elif event.key == pygame.K_r:
 					solver.reset()
+				elif event.key == pygame.K_e:
+					filename = f"{pygame.time.get_ticks()}.txt"
+					print(filename)
+					solver.exportRequests(filename)
+					print(f"latests requests exported to {filename}")
 
 		drawScreen(win, solver)
 		pygame.display.update()

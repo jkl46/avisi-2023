@@ -1,8 +1,9 @@
+from _queue import _Queue
 import pygame
 import requests
 import json
 
-GRID_WIDTH = 100
+GRID_WIDTH = 50
 GRID_HEIGHT = 50
 
 url = "https://cc-gekleurde-vakjes-4xdpz6dd6q-ez.a.run.app/api"
@@ -11,8 +12,10 @@ fieldType = {'UNKNOWN': 0, 'PATH':1, 'MOUNTAIN':2, 'FINISH': 3, 'ELECTRIC' : 4, 
 statusTypes = ['ELECTRIFIED', 'COLD', 'HOT', 'WET']
 startPos = (25, 49)
 endPos = (0, 49)
+
 class Solver:
 	def __init__(self, resetGrid = True):
+		self.q = _Queue(10)
 		self.finished = False
 		if resetGrid:
 			self.grid = [[0 for _ in range(GRID_WIDTH)] for _ in range(GRID_HEIGHT)]
@@ -25,6 +28,9 @@ class Solver:
 
 	def reset(self):
 		self.__init__(False)
+
+	def exportRequests(self, fileName):
+		self.q.fileExport(fileName)
 
 	def setSurrounding(self):
 		x = self.cPos[0]
@@ -42,6 +48,7 @@ class Solver:
 					print(f'FOUND {data["type"]} AT ({data["x"]},{data["y"]})')
 			except Exception:
 				print(f"FOUND {data['type']} at ({data['x']},{data['y']})")
+				print(r.text)
 				c = fieldType['UNKNOWN']
 
 			self.grid[data['y']][data['x']] = c
@@ -65,7 +72,7 @@ class Solver:
 		payload += ']'
 
 		r = requests.post(f"{url}/walk", json = json.loads(payload))
-
+		self.q.addQueue(r.text)
 		if r.status_code != 200:
 			print("Unable to walk in direction, retry!")
 			print(r.text)
