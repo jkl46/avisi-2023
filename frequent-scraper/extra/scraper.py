@@ -8,7 +8,7 @@ if not os.path.exists(logDir):
     os.makedirs(logDir)
 
 timeStart = time.time()
-logTimeInterval = 5
+logTimeInterval = 100
 
 index = 0
 f = open(f'logs\\log{index}.txt', 'w')
