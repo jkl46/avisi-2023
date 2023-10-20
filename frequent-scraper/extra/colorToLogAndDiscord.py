@@ -2,7 +2,6 @@ import requests
 import time
 from discordwebhook import Discord
 
-
 timeStart = time.time()
 logTimeInterval = 100
 
